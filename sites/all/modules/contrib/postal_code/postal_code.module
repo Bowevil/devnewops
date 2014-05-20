@@ -18,6 +18,10 @@
  * -for-12-countries/"
  */
 
+if(module_exists('content_migrate')){
+  module_load_include('inc', 'postal_code', 'content_migrate.zipcode');
+}
+
 /**
  * Implements hook_help().
  */
@@ -30,7 +34,7 @@ function postal_code_help($path, $arg) {
     foreach ($postal_code_validation_data as $country => $info) {
       $country_list_items .= '<li>' . $country_list[drupal_strtoupper($country)] . '</li>';
     }
-    $configurl = url('admin/structure/postal_code');
+    $configurl = url('admin/config/postal_code');
     $conturl   = url('admin/structure/types');
     $helptext = <<<EOT
 <p>A very minimal D7 Postal Code field with validation for one country (listed below) or a combination of countries.</p>
@@ -55,7 +59,7 @@ EOT;
 function postal_code_menu() {
   $items = array();
 
-  $items['admin/structure/postal_code'] = array(
+  $items['admin/config/postal_code'] = array(
     'title'             => 'Postal Codes',
     'description'       => 'Configuration for the Postal Code module.',
     'page callback'     => 'drupal_get_form',
@@ -169,11 +173,8 @@ function postal_code_field_widget_info() {
  * Implements hook_field_widget_form().
  */
 function postal_code_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
-
-  if (preg_match('/^postal_code_[a-z]{2,3}_postal_code_form$/', $instance['widget']['type'])) {
-    $widget = $instance['widget'];
-    $postal_type = drupal_substr($instance['widget']['type'], -19, 2);
-
+  $matches = array();
+  if (preg_match('/^postal_code_([a-z]{2,3})_postal_code_form$/', $instance['widget']['type'], $matches)) {
     $element['postal'] = array(
       '#type'           => 'textfield',
       '#title'          => $instance['label'],
@@ -186,7 +187,7 @@ function postal_code_field_widget_form(&$form, &$form_state, $field, $instance, 
 
     $element['postal_type'] = array(
       '#type'   => 'hidden',
-      '#value'  => $postal_type,
+      '#value'  => $matches[1],
     );
   }
   return $element;
@@ -283,11 +284,11 @@ function postal_code_validation() {
     'au' => array('/^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})$/'),
     'nl' => array('/^[1-9][0-9]{3}\s?([a-zA-Z]{2})?$/'),
     'es' => array('/^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$/'),
-    'dk' => array('/^([D-d][K-k])?( |-)?[1-9]{1}[0-9]{3}$/'),
+    'dk' => array('/^([D-d][K-k])?( |-)?([0-9]{1})?[0-9]{3}$/'),
     'se' => array('/^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/'),
     'be' => array('/^[1-9]{1}[0-9]{3}$/'),
     'in' => array('/^([1-9][0-9]{2}\s?[0-9]{3})$/'),
-    'pl' => array('/^[0-9]{2}-[0-9]{3}$/')
+    'pl' => array('/^[0-9]{2}-[0-9]{3}$/'),
   );
   return $postal_code_validation_data;
 }

@@ -5,7 +5,7 @@
  * Based on example from
  *  http://www.slideshare.net/zugec/fields-in-core-how-to-create-a-custom-field
  * and
- * http://drupal.org/project/examples .
+ * http://drupal.org/project/examples.
  *
  * I envision that every update which contains new countries in the
  * postal_code_regexes.inc file will begin with saving
@@ -39,6 +39,5 @@ function postal_code_field_schema($field) {
       ),
     );
   }
-  return array(
-    'columns' => $columns);
+  return array('columns' => $columns);
 }
