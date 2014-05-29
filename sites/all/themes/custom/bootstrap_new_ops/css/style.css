@@ -2,3 +2,13 @@
  * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
  * remove this comment and start adding your styles to this file.
  */
+
+.field-name-field-contract-amended-note {
+    padding: 4px;
+    border: 1px solid rgb(204, 204, 204);
+    font-size: 13px;
+    font-weight: bold;
+    text-transform:uppercase;
+    color: rgb(255, 255, 255);
+    background-color: rgb(70, 136, 71)
+}

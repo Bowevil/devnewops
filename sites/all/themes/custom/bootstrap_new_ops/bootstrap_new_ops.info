@@ -3,8 +3,6 @@ description = A Bootstrap Sub-theme.
 core = 7.x
 base theme = bootstrap
 
-;;stylesheets[all][] = css/flat-ui.css
-
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Regions
 ;;;;;;;;;;;;;;;;;;;;;
@@ -24,6 +22,7 @@ regions[page_bottom]    = 'Page bottom'
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Stylesheets
 ;;;;;;;;;;;;;;;;;;;;;
+
 
 stylesheets[all][] = css/style.css
 
