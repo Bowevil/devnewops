@@ -12,3 +12,34 @@
     color: rgb(255, 255, 255);
     background-color: rgb(70, 136, 71)
 }
+
+.ctools-modal-dialog {
+    height: auto !important;
+}
+.modal-content {
+    overflow: scroll;
+}
+
+.filedepottoolbar_searchbox .form-text {
+    height: auto !important; 
+}
+
+.filedepottoolbar{
+    height: 43px !important;
+}
+.tagsearchboxcontainer {
+    float: none;
+
+}
+.yui-layout{
+    height: 500px !important;
+}
+
+.yui-layout-wrap {
+    left: 2px !important;
+}
+
+.pluginReportTitle {
+    float: none !important;
+    padding: 0px !important;
+}
