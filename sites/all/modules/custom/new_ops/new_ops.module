@@ -6,6 +6,7 @@ function new_ops_form_alter(&$form, &$form_state, $form_id) {
   $form['title']['#description'] = t('Enter the name of the contract as stated in the Contract.');
   if ($form_id == 'search_block_form') { //find search block form from id
     //change search block form
+  $form['search_block_form']['#attributes']['title'] = t('Enter a contract name, contract number or funding source.');
   $form['search_block_form']['#default_value'] = t('Search for a contract');
   $form['search_block_form']['#attributes']['placeholder'] = t('Search for a contract');
   $form['search_block_form']['#attributes']['onblur'] = "if (this.value == '') {this.value = 'Search for a contract';}";
