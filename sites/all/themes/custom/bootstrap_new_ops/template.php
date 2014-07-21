@@ -4,6 +4,7 @@
  * @file
  * template.php
  */
+ 
 function new_ops_preprocess_html(&$variables) {
   /**
    * Add default icon

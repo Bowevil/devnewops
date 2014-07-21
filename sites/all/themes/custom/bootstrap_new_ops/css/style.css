@@ -43,3 +43,29 @@
     float: none !important;
     padding: 0px !important;
 }
+.view-filedepot a:hover{
+    text-decoration: none;
+}
+
+.table td {
+    background-color: #fdefeb !important;
+    
+}
+.table th {
+    background-color: #dd8b14 !important;
+}
+
+.table tr:hover td,
+tr.even:hover td.active,
+tr.odd:hover td.active {
+  background: #ebebeb !important;
+}
+
+.table a:hover {
+    text-decoration: none;
+}
+
+.logo.navbar-btn.pull-left {
+    margin-top: 10px;
+}
+  
