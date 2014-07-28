@@ -23,7 +23,7 @@ regions[page_bottom]    = 'Page bottom'
 ;; Stylesheets
 ;;;;;;;;;;;;;;;;;;;;;
 
-stylesheets[all][] = css/united.css
+stylesheets[all][] = css/unitednewops.css
 stylesheets[all][] = css/style.css
 
 
