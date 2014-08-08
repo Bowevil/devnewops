@@ -21,16 +21,73 @@
 }
 
 .filedepottoolbar_searchbox .form-text {
-    height: auto !important; 
+    height: auto !important;
+    float: left;
 }
 
 .filedepottoolbar{
     height: 43px !important;
+    background-color: #bdbec2 !important;
 }
-.tagsearchboxcontainer {
-    float: none;
 
+
+/** File depot buttons */
+
+.yui-button {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0px 0px 0px 0px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+.yui-button:focus,
+.yui-button:active:focus,
+.yui-button.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.yui-button:hover,
+.yui-button:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+.yui-button:active,
+.yui-button.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.yui-button.disabled,
+.yui-button[disabled],
+fieldset[disabled] .yui-button {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.yui-link-button{
+   margin-top: 3px !important;
+}
+
+/** End file depot buttons */
+
 .yui-layout{
     height: 500px !important;
 }
@@ -47,12 +104,42 @@
     text-decoration: none;
 }
 
+.filedepottoolbar div {
+    float: left;
+    width: auto !important;
+    height: 20px !important;
+    padding-left: 5px !important;
+}
+
+.filedepottoolbar div .floatleft {
+    width: auto !important;
+}
+
+.filedepottoolbar_searchbox form {
+    width: 20px !important;
+}
+
+.filedepottoolbar_searchbox table {
+    float: left !important;
+    width: 30% !important;
+    margin-left: 20px !important;
+}
+
+.filedepottoolbar_searchform table {
+    float: left !important;
+    visibility: visible !important;
+    background-color: transparent !important;
+    margin-left: 50px !important;
+
+}
+
+
 .table td {
-    background-color: #fdefeb !important;
+    background-color: #f0f0f1 !important;
     
 }
 .table th {
-    background-color: #dd8b14 !important;
+    background-color: #bdbec2 !important;
 }
 
 .table tr:hover td,
@@ -67,4 +154,17 @@ tr.odd:hover td.active {
 
 .logo.navbar-btn.pull-left {
     margin-top: 10px;
+}
+
+.views-field-name {
+    display: block;
+    padding: 10px 15px;
+}
+
+.views-field-name:hover {
+    background: #ebebeb !important;
+}
+
+.form-control {
+    width:auto;
 }

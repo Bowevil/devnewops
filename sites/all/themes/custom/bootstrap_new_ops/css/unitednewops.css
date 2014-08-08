@@ -1071,23 +1071,23 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 36px;
+  font-size: 1.875em; /*30px*/
 }
 h2,
 .h2 {
-  font-size: 30px;
+  font-size: 1.500em; /*24px*/
 }
 h3,
 .h3 {
-  font-size: 24px;
+  font-size: 1.125em; /*18px*/
 }
 h4,
 .h4 {
-  font-size: 18px;
+  font-size: 0.875em; /*14px*/
 }
 h5,
 .h5 {
-  font-size: 14px;
+  font-size: 0.750em; /*12px*/
 }
 h6,
 .h6 {
@@ -2150,7 +2150,7 @@ table th[class*="col-"] {
 .table-hover > tbody > tr.active:hover > td,
 .table-hover > tbody > tr:hover > .active,
 .table-hover > tbody > tr.active:hover > th {
-  background-color: #e8e8e8;
+  background-color: #ebebeb;
 }
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
@@ -4079,8 +4079,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #dd4814;
-  border-color: #bf3e11;
+  background-color: #7e7e80;
+  border-color: #7e7e80;
 }
 .navbar-default .navbar-brand {
   color: #ffffff;
