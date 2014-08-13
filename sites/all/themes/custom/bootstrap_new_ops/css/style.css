@@ -120,19 +120,19 @@ fieldset[disabled] .yui-button {
 }
 
 .filedepottoolbar_searchbox table {
-    float: left !important;
     width: 30% !important;
     margin-left: 20px !important;
 }
 
 .filedepottoolbar_searchform table {
-    float: left !important;
     visibility: visible !important;
     background-color: transparent !important;
     margin-left: 50px !important;
-
 }
 
+#multiaction.form-select.disabled_element, #multiaction.form-select.enabled_element {
+    width: 100% !important;
+}
 
 .table td {
     background-color: #f0f0f1 !important;

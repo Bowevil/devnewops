@@ -28,6 +28,7 @@ function new_ops_preprocess_html(&$variables) {
       '#tag' => 'link',
       '#attributes' => array(
         'href' => drupal_get_path('theme',$GLOBALS['theme']).'/apple-touch-icon-'.$size.'px.png',
+        //'href' => path_to_theme().'/apple-touch-icon-'.$size.'px.png',
         'rel' => 'apple-touch-icon-precomposed',
         'sizes' => $size . 'x' . $size,
       ),
