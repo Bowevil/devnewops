@@ -134,9 +134,8 @@ fieldset[disabled] .yui-button {
     width: 100% !important;
 }
 
-.table td {
+.information td {
     background-color: #f0f0f1 !important;
-    
 }
 .table th {
     background-color: #bdbec2 !important;
@@ -151,6 +150,7 @@ tr.odd:hover td.active {
 .table a:hover {
     text-decoration: none;
 }
+
 
 .logo.navbar-btn.pull-left {
     margin-top: 10px;
@@ -167,4 +167,13 @@ tr.odd:hover td.active {
 
 .form-control {
     width:auto;
+}
+
+.new-ops-footer p strong {
+    color: #B3B1B1 !important;
+    font-weight: lighter !important;
+}
+
+.new-ops-footer a:hover{
+    text-decoration: none !important;
 }
