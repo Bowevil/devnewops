@@ -18,7 +18,7 @@
  * -for-12-countries/"
  */
 
-if(module_exists('content_migrate')){
+if (module_exists('content_migrate')) {
   module_load_include('inc', 'postal_code', 'content_migrate.zipcode');
 }
 

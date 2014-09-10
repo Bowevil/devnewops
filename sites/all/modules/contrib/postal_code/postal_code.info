@@ -1,7 +1,6 @@
 name = Postal Code
 description = Postal Code Field Module
 core = 7.x
-dependencies[] = field_ui
 dependencies[] = field
 dependencies[] = options
 configure = admin/structure/postal_code
@@ -9,9 +8,9 @@ package = Fields
 
 files[] = content_migrate.zipcode.inc
 
-; Information added by Drupal.org packaging script on 2014-05-08
-version = "7.x-1.7"
+; Information added by Drupal.org packaging script on 2014-06-13
+version = "7.x-1.8"
 core = "7.x"
 project = "postal_code"
-datestamp = "1399592628"
+datestamp = "1402679639"
 
