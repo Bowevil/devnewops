@@ -177,12 +177,12 @@ function postal_code_field_widget_form(&$form, &$form_state, $field, $instance, 
   if (preg_match('/^postal_code_([a-z]{2,3})_postal_code_form$/', $instance['widget']['type'], $matches)) {
     $element['postal'] = array(
       '#type'           => 'textfield',
-      '#title'          => $instance['label'],
+      '#title'          => filter_xss_admin($instance['label']),
       '#maxlength'      => 16,
       '#required'       => $element['#required'],
-      '#default_value'  => isset($items[$delta]['postal']) ? trim($items[$delta]['postal']) : NULL,
+      '#default_value'  => isset($items[$delta]['postal']) ? check_plain(trim($items[$delta]['postal'])) : NULL,
       '#element_validate' => array('_postal_code_postal_validate'),
-      '#description'    => $instance['description'],
+      '#description'    => filter_xss_admin($instance['description']),
     );
 
     $element['postal_type'] = array(
