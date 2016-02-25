@@ -338,6 +338,7 @@ abstract class ViewsDataExportSimpleExportTest extends ViewsDataExportBaseTest {
   public function testNonBatchedExport() {
     $path = 'vde_test/' . $this->randomName();
     list($view, $expected) = $this->getExportView($path);
+
     // Save this view so we can hit the path.
     $view->save();
     // Ensure that the menu router system is rebuilt on the next page load.

@@ -11,6 +11,8 @@
  */
 class views_data_export_plugin_style_export extends views_plugin_style {
 
+  private $exporter = null;
+
   /**
    * Set options fields and default values.
    *
@@ -36,6 +38,12 @@ class views_data_export_plugin_style_export extends views_plugin_style {
       'default' => FALSE,
       'translatable' => FALSE,
     );
+
+    $options['exporter_options'] = array(
+      'default' => array(),
+      'translatable' => FALSE,
+    );
+
     return $options;
   }
 
@@ -84,6 +92,7 @@ class views_data_export_plugin_style_export extends views_plugin_style {
 
     // Get a list of the available arguments for token replacement.
     $options = array();
+    $options = $this->options;
 
     $count = 0; // This lets us prepare the key as we want it printed.
     foreach ($this->view->display_handler->get_handlers('argument') as $arg => $handler) {
@@ -140,6 +149,22 @@ class views_data_export_plugin_style_export extends views_plugin_style {
       '#default_value' => $this->options['parent_sort'],
       '#description' => t('Try to apply any additional sorting from the attached display like table sorting to the exported feed.'),
     );
+
+    // If the exporter needs settings, it will implement the interface.
+    if (in_array( 'ViewsDataExportExporterUserConfigurationInterface', class_implements($this->get_exporter()))) {
+      // Group the exporter settings in a fieldset.
+      $form_exporter_settings = array(
+        '#type' => 'fieldset',
+        '#title' => t('Exporter settings'),
+        '#collapsible' => FALSE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+      );
+      // Get the form options from the exporter.
+      $this->get_exporter()->options_form($form_exporter_settings, $form_state, $this->display->handler->get_field_labels());
+    }
+    $form['exporter_options'] = $form_exporter_settings;
+
   }
 
   /**
@@ -199,7 +224,7 @@ class views_data_export_plugin_style_export extends views_plugin_style {
       $this->extra_style = views_get_plugin('style', $style_name);
       $this->extra_style->init($this->view, $parent_display, $style_options);
 
-      // Call the second styles sort funciton and return the value.
+      // Call the second styles sort function and return the value.
       return $this->extra_style->build_sort();
     }
   }
@@ -218,42 +243,118 @@ class views_data_export_plugin_style_export extends views_plugin_style {
    * Render the display in this style.
    */
   function render() {
+    // Get our exporter ready.
+    if (!isset($this->exporter)) {
+      $this->get_exporter();
+    }
+
     if ($this->uses_row_plugin() && empty($this->row_plugin)) {
       vpr('views_plugin_style_default: Missing row plugin');
       return;
     }
 
-    $output = '';
-    $rows['header'] = $this->render_header();
-    $rows['body'] = $this->render_body();
-    $rows['footer'] = $this->render_footer();
-    $title = '';
-    $output .= theme($this->theme_functions(), array('view' => $this->view, 'options' => $this->options, 'rows' => $rows, 'title' => $title));
-    return $output;
+    // Open a file stream to write to.
+    $file = fopen('php://memory', 'w+');
+
+//    $output = '';
+//    $rows['header'] = $this->render_header();
+//    $rows['body'] = $this->render_body();
+//    $rows['footer'] = $this->render_footer();
+//    $title = '';
+//    $output .= theme($this->theme_functions(), array('view' => $this->view, 'options' => $this->options, 'rows' => $rows, 'title' => $title));
+//    return $output;
+
+    $this->render_header($file);
+    $this->render_body($file);
+    $this->render_footer($file);
+
+    // Read from file and verify contents.
+    fseek($file, 0);
+    $contents = '';
+    while (!feof($file)) {
+      $contents .= fread($file, 8192);
+    }
+
+    // Close up the file stream.
+    fclose($file);
+
+    return $contents;
+
   }
 
-  function render_header() {
-    $rows = array();
-    $title = '';
-    $output = '';
-    $output .= theme($this->theme_functions($this->definition['additional themes base'] . '_header'), array('view' => $this->view, 'options' => $this->options, 'rows' => $rows, 'title' => $title));
-    return $output;
+  function render_header($file = null) {
+
+    // Return a value if we haven't been given a file to write to.
+    $return_a_value = is_null($file);
+    if ($return_a_value) {
+      $file = fopen('php://memory', 'w+');
+    }
+
+    // Get the field titles/labels.
+    $field_labels = $this->display->handler->get_field_labels();
+
+    // Get the BOF.
+    $this->get_exporter(array('field_labels' => $field_labels,))->bof($file);
+
+    // Return a value if we haven't been given a file to write to.
+    if ($return_a_value) {
+      // Read from file and verify contents.
+      fseek($file, 0);
+      $contents = '';
+      while (!feof($file)) {
+        $contents .= fread($file, 8192);
+      }
+
+      // Close up the file stream.
+      fclose($file);
+      return $contents;
+    }
   }
 
-  function render_footer() {
-    $rows = array();
-    $title = '';
-    $output = '';
-    $output .= theme($this->theme_functions($this->definition['additional themes base'] . '_footer'), array('view' => $this->view, 'options' => $this->options, 'rows' => $rows, 'title' => $title));
+  function render_footer($file = null) {
 
-    return $output;
+    // Return a value if we haven't been given a file to write to.
+    $return_a_value = is_null($file);
+    if ($return_a_value) {
+      $file = fopen('php://memory', 'w+');
+    }
+
+    // TODO Get the actual row and column counts!
+    $this->get_exporter()->eof($file, 1, 1);
+
+    // Return a value if we haven't been given a file to write to.
+    if ($return_a_value) {
+      // Read from file and verify contents.
+      fseek($file, 0);
+      $contents = '';
+      while (!feof($file)) {
+        $contents .= fread($file, 8192);
+      }
+
+      // Close up the file stream.
+      fclose($file);
+      return $contents;
+    }
   }
 
-  function render_body() {
+  function render_body($file = null) {
+
+    // Return a value if we haven't been given a file to write to.
+    $return_a_value = is_null($file);
+    if ($return_a_value) {
+      // Write to our own memory stream.
+      $file = fopen('php://memory', 'w+');
+    }
+
     if ($this->uses_row_plugin() && empty($this->row_plugin)) {
       vpr('views_plugin_style_default: Missing row plugin');
       return;
     }
+
+    $view     = $this->view;
+    $fields   = &$view->field;
+
+    $field_labels = $this->display->handler->get_field_labels();
 
     // Group the rows according to the grouping field, if specified.
     $sets = $this->render_grouping($this->view->result, $this->options['grouping']);
@@ -261,6 +362,10 @@ class views_data_export_plugin_style_export extends views_plugin_style {
     // Render each group separately and concatenate.  Plugins may override this
     // method if they wish some other way of handling grouping.
     $output = '';
+//    $file = fopen('php://memory', 'w+');
+    $exporter = $this->get_exporter();
+    $row_count = 0;
+
     foreach ($sets as $title => $records) {
       if ($this->uses_row_plugin()) {
         $rows = array();
@@ -273,12 +378,49 @@ class views_data_export_plugin_style_export extends views_plugin_style {
         $rows = $records;
       }
 
-      $title = '';
-      $output .= theme($this->theme_functions($this->definition['additional themes base'] . '_body'), array('view' => $this->view, 'options' => $this->options, 'rows' => $rows, 'title' => $title));
-    }
-    unset($this->view->row_index);
-    return $output;
+      $hide_empty_support = $exporter->supports_hide_if_empty();
 
+      $themed_rows = array();
+      $keys = array_keys($fields);
+      foreach ($rows as $num => $row) {
+        $themed_rows[$num] = array();
+
+        foreach ($keys as $id) {
+          if (empty($fields[$id]->options['exclude'])) {
+            $content = $view->style_plugin->rendered_fields[$num][$id];
+
+            if ($hide_empty_support && !empty($fields[$id]->options['hide_empty'])) {
+              if ($fields[$id]->is_value_empty($content, $fields[$id]->options['empty_zero'])) {
+                continue;
+              }
+            }
+
+            $themed_rows[$num][$id] = $content;
+          }
+        }
+      }
+
+      foreach ($themed_rows as $row) {
+        $exporter->add_row($file, $row, $row_count, $field_labels);
+        $row_count++;
+      };
+    }
+
+    unset($this->view->row_index);
+
+    // Return a value if we haven't been given a file to write to.
+    if ($return_a_value) {
+      // Read from file and verify contents.
+      fseek($file, 0);
+      $contents = '';
+      while (!feof($file)) {
+        $contents .= fread($file, 8192);
+      }
+      // Close up the file stream.
+      fclose($file);
+      // Return the contents.
+      return $contents;
+    }
   }
 
   /**
@@ -380,5 +522,38 @@ class views_data_export_plugin_style_export extends views_plugin_style {
     }
 
     return $filename;
+  }
+
+  /**
+   * Get our exporter initialised and ready for use.
+   */
+  function get_exporter($options = NULL) {
+
+    if (is_null($options)) {
+      $options = $this->options['exporter_options'];
+    }
+    else  if ($options == $this->options['exporter_options']) {
+      return $this->exporter;
+    }
+    else {
+      $options = array_merge($options, $this->options['exporter_options']);
+    }
+
+    $this->exporter = new $this->definition['exporter']($options);
+    return $this->exporter;
+  }
+
+  function options_submit(&$form, &$form_state) {
+    if (in_array( 'ViewsDataExportExporterUserConfigurationInterface', class_implements($this->get_exporter()))) {
+      $this->get_exporter()->options_submit($form, $form_state);
+    }
+    parent::options_submit($form, $form_state);
+  }
+
+  function options_validate(&$form, &$form_state) {
+    if (in_array( 'ViewsDataExportExporterUserConfigurationInterface', class_implements($this->get_exporter()))) {
+      $this->get_exporter()->options_validate($form, $form_state);
+    }
+    parent::options_validate($form, $form_state);
   }
 }

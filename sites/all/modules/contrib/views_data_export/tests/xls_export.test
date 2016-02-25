@@ -26,21 +26,14 @@ class XLSExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     $display->override_option('style_plugin', $this->getStylePluginName());
     $display->override_option('path', $path);
 
-    $expected = '<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  </head>
-  <body>
-    <table>
-    <thead><tr><th>ID</th><th>Name</th><th>Age</th></tr></thead>    <tbody> <tr class="odd"><td>1</td><td>John</td><td>25</td> </tr>
- <tr class="even"><td>2</td><td>George</td><td>27</td> </tr>
- <tr class="odd"><td>3</td><td>Ringo</td><td>28</td> </tr>
- <tr class="even"><td>4</td><td>Paul</td><td>26</td> </tr>
- <tr class="odd"><td>5</td><td>Meredith</td><td>30</td> </tr>
-      </tbody>
-    </table>
-  </body>
-</html>';
+    $expected = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><dimension ref="A1:A1"/><sheetData>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ' . '
+<row><c r="A1"><v>1</v></c><c r="B1" t="inlineStr"><is><t>John</t></is></c><c r="C1"><v>25</v></c></row>
+<row><c r="A2"><v>2</v></c><c r="B2" t="inlineStr"><is><t>George</t></is></c><c r="C2"><v>27</v></c></row>
+<row><c r="A3"><v>3</v></c><c r="B3" t="inlineStr"><is><t>Ringo</t></is></c><c r="C3"><v>28</v></c></row>
+<row><c r="A4"><v>4</v></c><c r="B4" t="inlineStr"><is><t>Paul</t></is></c><c r="C4"><v>26</v></c></row>
+<row><c r="A5"><v>5</v></c><c r="B5" t="inlineStr"><is><t>Meredith</t></is></c><c r="C5"><v>30</v></c></row>
+</sheetData></worksheet>';
 
     return array(&$view, $expected);
   }
