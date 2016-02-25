@@ -73,9 +73,7 @@ class CSVExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     ));
 
     $style_options = array(
-      'exporter_options' => array(
-        'keep_html' => TRUE,
-      ),
+      'keep_html' => TRUE,
     );
 
     $expected = '"<strong id=""id"">ID</strong>","Name","Age"
@@ -143,9 +141,7 @@ class CSVExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     ));
 
     $style_options = array(
-      'exporter_options' => array(
-        'trim' => FALSE,
-      ),
+      'trim' => FALSE,
     );
 
     $expected = '"ID","Name","Age"
@@ -161,9 +157,7 @@ class CSVExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
 
     // And now make sure that trimming works as expected.
     $style_options = array(
-      'exporter_options' => array(
-       'trim' => TRUE,
-      ),
+      'trim' => TRUE,
     );
 
     $expected = '"ID","Name","Age"
@@ -197,9 +191,7 @@ class CSVExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     foreach ($encodings as $encoding => $conversion) {
 
       $style_options = array(
-        'exporter_options' => array(
-          'encoding' => $encoding,
-        ),
+        'encoding' => $encoding,
       );
 
       $expected = '"ID","Name","Age"
@@ -213,5 +205,7 @@ class CSVExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
 
       $this->executeAndCompareGivenView($view, $expected, $message, $style_options);
     }
+
   }
+
 }

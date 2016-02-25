@@ -26,15 +26,7 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     $display->override_option('style_plugin', 'views_data_export_xml');
     $display->override_option('path', $path);
 
-    $style_options = array(
-      'exporter_options' => array(
-        'root_node' => 'views_tests',
-        'item_node' => 'views_test',
-      ),
-    );
-    $display->override_option('style_options', $style_options);
-
-    $expected = '<?xml version="1.0" encoding="UTF-8"?>
+    $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <views_tests>
   <views_test>
     <ID>1</ID>
@@ -88,14 +80,7 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
       ->condition('name', 'John')
       ->execute();
 
-    $style_options = array(
-      'exporter_options' => array(
-        'root_node' => 'views_tests',
-        'item_node' => 'views_test',
-      ),
-    );
-
-    $expected = '<?xml version="1.0" encoding="UTF-8"?>
+    $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <views_tests>
   <views_test>
     <ID>1</ID>
@@ -124,7 +109,7 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
 
     $message = 'Hide if empty support for ' . $this->vde_export_type . ' export matched expected output.';
 
-    $this->executeAndCompareGivenView($view, $expected, $message, $style_options);
+    $this->executeAndCompareGivenView($view, $expected, $message);
 
   }
 
@@ -161,45 +146,38 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
       ),
     ));
 
-    $style_options = array(
-      'exporter_options' => array(
-        'root_node' => 'views_tests',
-        'item_node' => 'views_test',
-      ),
-    );
-
-    $expected = '<?xml version="1.0" encoding="UTF-8"?>
+    $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <views_tests>
   <views_test>
     <ID>1</ID>
-    <Views-test:-Name>John</Views-test:-Name>
+    <no-name>John</no-name>
     <invalid-tag-name>25</invalid-tag-name>
   </views_test>
   <views_test>
     <ID>2</ID>
-    <Views-test:-Name>George</Views-test:-Name>
+    <no-name>George</no-name>
     <invalid-tag-name>27</invalid-tag-name>
   </views_test>
   <views_test>
     <ID>3</ID>
-    <Views-test:-Name>Ringo</Views-test:-Name>
+    <no-name>Ringo</no-name>
     <invalid-tag-name>28</invalid-tag-name>
   </views_test>
   <views_test>
     <ID>4</ID>
-    <Views-test:-Name>Paul</Views-test:-Name>
+    <no-name>Paul</no-name>
     <invalid-tag-name>26</invalid-tag-name>
   </views_test>
   <views_test>
     <ID>5</ID>
-    <Views-test:-Name>Meredith</Views-test:-Name>
+    <no-name>Meredith</no-name>
     <invalid-tag-name>30</invalid-tag-name>
   </views_test>
 </views_tests>';
 
     $message = 'Empty label test in ' . $this->vde_export_type . ' export matched expected output.';
 
-    $this->executeAndCompareGivenView($view, $expected, $message, $style_options);
+    $this->executeAndCompareGivenView($view, $expected, $message);
   }
 
   /**
@@ -216,13 +194,11 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     $item_node = _views_data_export_xml_tag_clean($this->randomName());
 
     $style_options = array(
-      'exporter_options' => array(
-        'root_node' => $root_node,
-        'item_node' => $item_node,
-      ),
+      'root_node' => $root_node,
+      'item_node' => $item_node,
     );
 
-    $expected = '<?xml version="1.0" encoding="UTF-8"?>
+    $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <' . $root_node . '>
   <' . $item_node . '>
     <ID>1</ID>
@@ -265,12 +241,8 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     $display = $view->display['default']->handler;
 
     $style_options = array(
-      'exporter_options' => array(
-        'no_entity_encode' => array(
-          'id' => 'id',
-        ),
-        'root_node' => 'views_tests',
-        'item_node' => 'views_test',
+      'no_entity_encode' => array(
+        'id' => 'id',
       ),
     );
 
@@ -303,31 +275,31 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
       ),
     ));
 
-    $expected = '<?xml version="1.0" encoding="UTF-8"?>
+    $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <views_tests>
   <views_test>
     <ID><strong>1</strong></ID>
-    <Name>&amp;lt;em&amp;gt;John&amp;lt;/em&amp;gt;</Name>
+    <Name>&lt;em&gt;John&lt;/em&gt;</Name>
     <Age>25</Age>
   </views_test>
   <views_test>
     <ID><strong>2</strong></ID>
-    <Name>&amp;lt;em&amp;gt;George&amp;lt;/em&amp;gt;</Name>
+    <Name>&lt;em&gt;George&lt;/em&gt;</Name>
     <Age>27</Age>
   </views_test>
   <views_test>
     <ID><strong>3</strong></ID>
-    <Name>&amp;lt;em&amp;gt;Ringo&amp;lt;/em&amp;gt;</Name>
+    <Name>&lt;em&gt;Ringo&lt;/em&gt;</Name>
     <Age>28</Age>
   </views_test>
   <views_test>
     <ID><strong>4</strong></ID>
-    <Name>&amp;lt;em&amp;gt;Paul&amp;lt;/em&amp;gt;</Name>
+    <Name>&lt;em&gt;Paul&lt;/em&gt;</Name>
     <Age>26</Age>
   </views_test>
   <views_test>
     <ID><strong>5</strong></ID>
-    <Name>&amp;lt;em&amp;gt;Meredith&amp;lt;/em&amp;gt;</Name>
+    <Name>&lt;em&gt;Meredith&lt;/em&gt;</Name>
     <Age>30</Age>
   </views_test>
 </views_tests>';
@@ -344,13 +316,9 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
     $view = $this->getBasicExportView();
 
     $style_options = array(
-      'exporter_options' => array(
-        'cdata_wrapper' => array(
-          'id' => 'id',
-          'name' => 'name',
-        ),
-        'root_node' => 'views_tests',
-        'item_node' => 'views_test',
+      'cdata_wrapper' => array(
+        'id' => 'id',
+        'name' => 'name',
       ),
     );
 
@@ -381,7 +349,7 @@ class XMLExportViewsDataExportTests extends ViewsDataExportSimpleExportTest {
       ),
     ));
 
-    $expected = '<?xml version="1.0" encoding="UTF-8"?>
+    $expected = '<?xml version="1.0" encoding="UTF-8" ?>
 <views_tests>
   <views_test>
     <ID><![CDATA[1]]></ID>

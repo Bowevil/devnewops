@@ -355,9 +355,7 @@ class views_data_export_plugin_display_export extends views_plugin_display_feed 
 
 
   /**
-   * Compiles the next chunk of the output file.
-   *
-   * This will only be executed in batched mode.
+   * Compiles the next chunk of the output file
    */
   function execute_normal() {
 
@@ -449,27 +447,16 @@ class views_data_export_plugin_display_export extends views_plugin_display_feed 
 
     $this->view->build();
 
-    // Give the view a handle on our output file.
-    $file_handle = NULL;
-    if ($uri = $this->outputfile_path()) {
-      $file_handle = fopen($this->outputfile_path(), 'r+');
-      fseek($file_handle, 0, SEEK_END);
-    }
-
     switch ($this->batched_execution_state->batch_state) {
       case VIEWS_DATA_EXPORT_BODY:
-        $output = $this->view->style_plugin->render_body($file_handle);
+        $output = $this->view->style_plugin->render_body();
         break;
       case VIEWS_DATA_EXPORT_HEADER:
-        $output = $this->view->style_plugin->render_header($file_handle);
+        $output = $this->view->style_plugin->render_header();
         break;
       case VIEWS_DATA_EXPORT_FOOTER:
-        $output = $this->view->style_plugin->render_footer($file_handle);
+        $output = $this->view->style_plugin->render_footer();
         break;
-    }
-
-    if (isset($file_handle)) {
-      fclose($file_handle);
     }
 
     return $output;
@@ -1032,8 +1019,4 @@ class views_data_export_plugin_query_pgsql_batched extends views_data_export_plu
     }
     $view->execute_time = microtime(TRUE) - $start;
   }
-
-
-
-
 }

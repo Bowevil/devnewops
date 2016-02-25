@@ -52,8 +52,7 @@ function views_data_export_views_plugins() {
       'views_data_export_csv' => array(
         'title' => t('CSV file'),
         'help' => t('Display the view as a comma separated list.'),
-        'handler' => 'views_data_export_plugin_style_export',
-        'exporter' => 'ViewsDataExportExporterDelimited',
+        'handler' => 'views_data_export_plugin_style_export_csv',
         // Views Data Export element that will be used to set additional headers when serving the feed.
         'export headers' => array('Content-type' => 'text/csv; charset=utf-8'),
         // Views Data Export element mostly used for creating some additional classes and template names.
@@ -72,7 +71,6 @@ function views_data_export_views_plugins() {
         'title' => t('DOC file'),
         'help' => t('Display the view as a doc file.'),
         'handler' => 'views_data_export_plugin_style_export',
-        'exporter' => 'ViewsDataExportExporterDOC',
         'export headers' => array('Content-Type' => 'application/msword'),
         'export feed type' => 'doc',
         'export feed text' => 'Word Document',
@@ -89,7 +87,6 @@ function views_data_export_views_plugins() {
         'title' => t('TXT file'),
         'help' => t('Display the view as a txt file.'),
         'handler' => 'views_data_export_plugin_style_export',
-        'exporter' => 'ViewsDataExportExporterTXT',
         'export headers' => array('Content-Type' => 'text/plain'),
         'export feed type' => 'txt',
         'export feed text' => 'Plain Text Document',
@@ -106,7 +103,6 @@ function views_data_export_views_plugins() {
         'title' => t('XLS file'),
         'help' => t('Display the view as a xls file.'),
         'handler' => 'views_data_export_plugin_style_export',
-        'exporter' => 'ViewsDataExportExporterExcelxlsx',
         'export headers' => array('Content-Type' => 'application/vnd.ms-excel'),
         'export feed type' => 'xls',
         'export feed text' => 'XLS',
@@ -121,9 +117,8 @@ function views_data_export_views_plugins() {
       ) + $style_defaults,
       'views_data_export_xml' => array(
         'title' => t('XML file'),
-        'help' => t('Display the view as a xml file.'),
-        'handler' => 'views_data_export_plugin_style_export',
-        'exporter' => 'ViewsDataExportExporterXML',
+        'help' => t('Display the view as a txt file.'),
+        'handler' => 'views_data_export_plugin_style_export_xml',
         'export headers' => array('Content-Type' => 'text/xml'),
         'export feed type' => 'xml',
         'export feed text' => 'XML',
